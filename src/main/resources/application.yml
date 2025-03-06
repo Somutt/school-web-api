@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: School-Web
+  profiles:
+    active: test
+  jpa:
+    show-sql: true
