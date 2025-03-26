@@ -57,4 +57,17 @@ public class StudentController {
         URI uri = URIUtils.createHeaderLocation(student.getId());
         return ResponseEntity.created(uri).body(studentDto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> destroy(@PathVariable String id) {
+        UUID studentId = UUID.fromString(id);
+        Optional<Student> optional = service.findById(studentId);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        service.delete(optional.get());
+        return ResponseEntity.noContent().build();
+    }
 }

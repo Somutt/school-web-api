@@ -27,4 +27,8 @@ public class StudentService {
     public Student save(Student student) {
         return repository.save(student);
     }
+
+    public void delete(Student student) {
+        repository.delete(student);
+    }
 }
