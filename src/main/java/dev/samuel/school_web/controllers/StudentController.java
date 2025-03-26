@@ -8,12 +8,11 @@ import dev.samuel.school_web.services.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/students")
@@ -24,6 +23,21 @@ public class StudentController {
     public StudentController(StudentService service, @Qualifier("studentMapperImpl") StudentMapper mapper) {
         this.service = service;
         this.mapper = mapper;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentDTO> show(@PathVariable String id) {
+        UUID studentId = UUID.fromString(id);
+        Optional<Student> optional = service.findById(studentId);
+
+        if (optional.isPresent()) {
+            Student student = optional.get();
+            StudentDTO dto = mapper.toDTO(student);
+
+            return ResponseEntity.ok(dto);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
