@@ -1,73 +1,60 @@
 package dev.samuel.school_web.controllers;
 
 import dev.samuel.school_web.controllers.dto.StudentDTO;
-import dev.samuel.school_web.controllers.mappers.StudentMapper;
 import dev.samuel.school_web.controllers.utils.URIUtils;
 import dev.samuel.school_web.entities.Student;
 import dev.samuel.school_web.services.StudentService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
     private final StudentService service;
-    private final StudentMapper mapper;
 
-    public StudentController(StudentService service, @Qualifier("studentMapperImpl") StudentMapper mapper) {
+    public StudentController(StudentService service) {
         this.service = service;
-        this.mapper = mapper;
     }
 
     @GetMapping
     public ResponseEntity<List<StudentDTO>> index() {
-        List<Student> students = service.findAll();
-        List<StudentDTO> studentDTOS = students.stream().map(mapper::toDTO).toList();
+        List<StudentDTO> studentDTOs = service.findAll();
 
-        return ResponseEntity.ok(studentDTOS);
+        return ResponseEntity.ok(studentDTOs);
     }
 
+    //treat IllegalArgumentException for Ids not on UUIDs format
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> show(@PathVariable String id) {
-        UUID studentId = UUID.fromString(id);
-        Optional<Student> optional = service.findById(studentId);
-
-        if (optional.isPresent()) {
-            Student student = optional.get();
-            StudentDTO dto = mapper.toDTO(student);
-
-            return ResponseEntity.ok(dto);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-    @PostMapping
-    public ResponseEntity<StudentDTO> store(@RequestBody @Valid StudentDTO studentDto) {
-        Student student = mapper.toEntity(studentDto);
-        student = service.save(student);
-
-        URI uri = URIUtils.createHeaderLocation(student.getId());
-        return ResponseEntity.created(uri).body(studentDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> destroy(@PathVariable String id) {
-        UUID studentId = UUID.fromString(id);
-        Optional<Student> optional = service.findById(studentId);
-
-        if (optional.isEmpty()) {
+        StudentDTO studentDTO = service.findById(id);
+        if (studentDTO == null) {
             return ResponseEntity.notFound().build();
         }
 
-        service.delete(optional.get());
+        return ResponseEntity.ok(studentDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<StudentDTO> store(@RequestBody @Valid StudentDTO studentDTO) {
+        Student student = service.save(studentDTO);
+        URI uri = URIUtils.createHeaderLocation(student.getId());
+
+        return ResponseEntity.created(uri).body(studentDTO);
+    }
+
+    //treat IllegalArgumentException for Ids not on UUIDs format
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> destroy(@PathVariable String id) {
+        StudentDTO studentDTO = service.findById(id);
+        if (studentDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
