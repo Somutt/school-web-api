@@ -27,7 +27,6 @@ public class StudentController {
         return ResponseEntity.ok(studentDTOs);
     }
 
-    //treat IllegalArgumentException for Ids not on UUIDs format
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> show(@PathVariable String id) {
         StudentDTO studentDTO = service.findById(id);
@@ -46,7 +45,6 @@ public class StudentController {
         return ResponseEntity.created(uri).body(studentDTO);
     }
 
-    //treat IllegalArgumentException for Ids not on UUIDs format
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> destroy(@PathVariable String id) {
         StudentDTO studentDTO = service.findById(id);
