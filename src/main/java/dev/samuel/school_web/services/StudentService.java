@@ -43,4 +43,23 @@ public class StudentService {
         UUID studentId = UUID.fromString(id);
         repository.deleteById(studentId);
     }
+
+    public StudentDTO update(String id, StudentDTO studentDTO) {
+        UUID studentId = UUID.fromString(id);
+        Optional<Student> studentOptional = repository.findById(studentId);
+        if (studentOptional.isEmpty()) {
+            return null;
+        }
+
+        Student student = studentOptional.get();
+        updateStudent(student, studentDTO);
+
+        return mapper.toDTO(repository.save(student));
+    }
+
+    private void updateStudent(Student student, StudentDTO studentDTO) {
+        student.setName(studentDTO.name());
+        student.setRegistry(studentDTO.registry());
+        student.setGrade(studentDTO.grade());
+    }
 }
