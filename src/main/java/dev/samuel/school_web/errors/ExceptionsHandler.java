@@ -1,7 +1,9 @@
 package dev.samuel.school_web.errors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,5 +31,26 @@ public class ExceptionsHandler {
                                         .toList();
 
         return new ErrorResponseDTO(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Request validation failed", errors);
+    }
+
+    //Body without JSON or unexpected format
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        return ErrorResponseDTO.badRequest("Body is missing or in unexpected format");
+    }
+
+    //Non-implemented methods response
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErrorResponseDTO handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+        return ErrorResponseDTO.methodNotSupported("HTTP Method not supported for this request");
+    }
+
+    //Generic RuntimeException handler
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponseDTO handleRuntimeException(RuntimeException e) {
+        return ErrorResponseDTO.internalServerError("Unexpected error, send direct message or ticket");
     }
 }

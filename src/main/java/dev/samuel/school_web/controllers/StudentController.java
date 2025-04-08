@@ -37,7 +37,6 @@ public class StudentController {
         return ResponseEntity.ok(studentDTO);
     }
 
-    //treat HttpMessageNotReadableException
     //treat duplicated registry with validate and custom exception
     @PostMapping
     public ResponseEntity<StudentDTO> store(@RequestBody @Valid StudentDTO studentDTO) {
@@ -58,8 +57,6 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    //treat HttpMessageNotReadableException for body without JSON
-    //treat HttpRequestMethodNotSupportedException for PUT without Id
     //treat duplicated registry with validate and custom exception
     @PutMapping("/{id}")
     public ResponseEntity<StudentDTO> update(@PathVariable String id, @RequestBody @Valid StudentDTO studentDTO) {
