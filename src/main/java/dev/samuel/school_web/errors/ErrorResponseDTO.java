@@ -17,4 +17,8 @@ public record ErrorResponseDTO(Integer status, String message, List<ErrorDescrip
     public static ErrorResponseDTO internalServerError(String message) {
         return new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), message, List.of());
     }
+
+    public static ErrorResponseDTO conflict(String message) {
+        return new ErrorResponseDTO(HttpStatus.CONFLICT.value(), message, List.of());
+    }
 }

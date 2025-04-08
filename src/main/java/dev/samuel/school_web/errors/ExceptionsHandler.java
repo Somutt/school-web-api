@@ -1,5 +1,6 @@
 package dev.samuel.school_web.errors;
 
+import dev.samuel.school_web.errors.exceptions.DuplicatedRegisterException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -45,6 +46,12 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorResponseDTO handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e) {
         return ErrorResponseDTO.methodNotSupported("HTTP Method not supported for this request");
+    }
+
+    @ExceptionHandler(DuplicatedRegisterException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponseDTO handleDuplicatedRegisterException(DuplicatedRegisterException e) {
+        return ErrorResponseDTO.conflict(e.getMessage());
     }
 
     //Generic RuntimeException handler
