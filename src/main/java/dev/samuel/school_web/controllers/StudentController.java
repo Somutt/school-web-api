@@ -5,6 +5,7 @@ import dev.samuel.school_web.controllers.utils.URIUtils;
 import dev.samuel.school_web.entities.Student;
 import dev.samuel.school_web.services.StudentService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +21,25 @@ public class StudentController {
         this.service = service;
     }
 
+    /*
     @GetMapping
     public ResponseEntity<List<StudentDTO>> index() {
         List<StudentDTO> studentDTOs = service.findAll();
 
         return ResponseEntity.ok(studentDTOs);
+    }
+    */
+
+    @GetMapping
+    public ResponseEntity<Page<StudentDTO>> index(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "registry", required = false) String registry,
+            @RequestParam(value = "grade", required = false) String grade,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "page-size", defaultValue = "10") Integer pageSize
+    ) {
+        Page<StudentDTO> studentDTOPage = service.search(name, registry, grade, page, pageSize);
+        return ResponseEntity.ok(studentDTOPage);
     }
 
     @GetMapping("/{id}")
@@ -37,7 +52,6 @@ public class StudentController {
         return ResponseEntity.ok(studentDTO);
     }
 
-    //treat duplicated registry with validate and custom exception
     @PostMapping
     public ResponseEntity<StudentDTO> store(@RequestBody @Valid StudentDTO studentDTO) {
         Student student = service.save(studentDTO);
@@ -57,7 +71,6 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    //treat duplicated registry with validate and custom exception
     @PutMapping("/{id}")
     public ResponseEntity<StudentDTO> update(@PathVariable String id, @RequestBody @Valid StudentDTO studentDTO) {
         studentDTO = service.update(id, studentDTO);

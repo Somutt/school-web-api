@@ -4,8 +4,13 @@ import dev.samuel.school_web.controllers.dto.StudentDTO;
 import dev.samuel.school_web.controllers.mappers.StudentMapper;
 import dev.samuel.school_web.entities.Student;
 import dev.samuel.school_web.repositories.StudentRepository;
+import dev.samuel.school_web.services.specifications.StudentSpecs;
 import dev.samuel.school_web.validators.StudentValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +35,27 @@ public class StudentService {
         List<Student> students = repository.findAll();
 
         return students.stream().map(mapper::toDTO).toList();
+    }
+
+    public Page<StudentDTO> search(String name, String registry, String grade, Integer page, Integer pageSize) {
+        Specification<Student> specs = Specification.where(
+                (root, query, criteriaBuilder) -> criteriaBuilder.conjunction());
+
+        if (name != null) {
+            specs = specs.and(StudentSpecs.nameLike(name));
+        }
+
+        if (registry != null) {
+            specs = specs.and(StudentSpecs.registryEquals(registry));
+        }
+
+        if(grade != null) {
+            specs = specs.and(StudentSpecs.gradeEquals(grade));
+        }
+
+        Pageable request = PageRequest.of(page, pageSize);
+        Page<Student> students = repository.findAll(specs, request);
+        return students.map(mapper::toDTO);
     }
 
     public StudentDTO findById(String id) {
