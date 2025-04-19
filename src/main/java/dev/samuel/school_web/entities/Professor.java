@@ -18,7 +18,7 @@ public class Professor {
     private String name;
     @Column(nullable = false)
     private Integer age;
-    @Column
+    @Column(name = "is_coordinator", nullable = false)
     private boolean isCoordinator = false;
     @CreatedDate
     private LocalDateTime created;
