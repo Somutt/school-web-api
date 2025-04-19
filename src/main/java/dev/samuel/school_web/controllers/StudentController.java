@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/students")
@@ -20,15 +19,6 @@ public class StudentController {
     public StudentController(StudentService service) {
         this.service = service;
     }
-
-    /*
-    @GetMapping
-    public ResponseEntity<List<StudentDTO>> index() {
-        List<StudentDTO> studentDTOs = service.findAll();
-
-        return ResponseEntity.ok(studentDTOs);
-    }
-    */
 
     @GetMapping
     public ResponseEntity<Page<StudentDTO>> index(

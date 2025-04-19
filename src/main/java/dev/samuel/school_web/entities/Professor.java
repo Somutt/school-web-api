@@ -9,28 +9,27 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-public class Student {
+public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(length = 100, nullable = false)
     private String name;
-    @Column(length = 6, nullable = false, unique = true)
-    private String registry;
-    @Column(length = 2)
-    private String grade;
+    @Column(nullable = false)
+    private Integer age;
+    @Column
+    private boolean isCoordinator = false;
     @CreatedDate
     private LocalDateTime created;
     @LastModifiedDate
     private LocalDateTime updated;
 
-    public Student() {}
+    public Professor() {}
 
-    public Student(String name, String registry, String grade) {
+    public Professor(String name, Integer age) {
         this.name = name;
-        this.registry = registry;
-        this.grade = grade;
+        this.age = age;
     }
 
     public UUID getId() {
@@ -49,20 +48,20 @@ public class Student {
         this.name = name;
     }
 
-    public String getRegistry() {
-        return registry;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setRegistry(String registry) {
-        this.registry = registry;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public String getGrade() {
-        return grade;
+    public boolean isCoordinator() {
+        return isCoordinator;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setCoordinator(boolean coordinator) {
+        isCoordinator = coordinator;
     }
 
     public LocalDateTime getCreated() {
@@ -84,17 +83,17 @@ public class Student {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(registry, student.registry);
+        Professor professor = (Professor) o;
+        return isCoordinator == professor.isCoordinator && Objects.equals(id, professor.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, registry);
+        return Objects.hash(id, isCoordinator);
     }
 
     @Override
     public String toString() {
-        return "Student name:" + name + ", registry: " + registry + ", grade: " + grade;
+        return "Professor name:" + name + ", age: " + age + ", isCoordinator: " + isCoordinator;
     }
 }
