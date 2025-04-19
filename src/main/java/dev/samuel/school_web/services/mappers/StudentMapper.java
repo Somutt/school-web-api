@@ -1,4 +1,4 @@
-package dev.samuel.school_web.controllers.mappers;
+package dev.samuel.school_web.services.mappers;
 
 import dev.samuel.school_web.controllers.dto.StudentDTO;
 import dev.samuel.school_web.entities.Student;

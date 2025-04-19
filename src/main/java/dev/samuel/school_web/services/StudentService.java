@@ -1,7 +1,7 @@
 package dev.samuel.school_web.services;
 
 import dev.samuel.school_web.controllers.dto.StudentDTO;
-import dev.samuel.school_web.controllers.mappers.StudentMapper;
+import dev.samuel.school_web.services.mappers.StudentMapper;
 import dev.samuel.school_web.entities.Student;
 import dev.samuel.school_web.repositories.StudentRepository;
 import dev.samuel.school_web.services.specifications.StudentSpecs;
