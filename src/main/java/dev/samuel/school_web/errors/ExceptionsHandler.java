@@ -54,10 +54,12 @@ public class ExceptionsHandler {
         return ErrorResponseDTO.conflict(e.getMessage());
     }
 
+    /*
     //Generic RuntimeException handler
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponseDTO handleRuntimeException(RuntimeException e) {
         return ErrorResponseDTO.internalServerError("Unexpected error, send direct message or ticket");
     }
+     */
 }

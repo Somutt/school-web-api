@@ -19,7 +19,7 @@ public class Professor {
     @Column(nullable = false)
     private Integer age;
     @Column(name = "is_coordinator", nullable = false)
-    private boolean isCoordinator = false;
+    private boolean isCoordinator;
     @CreatedDate
     private LocalDateTime created;
     @LastModifiedDate
