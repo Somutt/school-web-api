@@ -1,12 +1,12 @@
 package dev.samuel.school_web.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 public class Room {
@@ -22,6 +22,10 @@ public class Room {
     private LocalDateTime created;
     @LastModifiedDate
     private LocalDateTime updated;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private final Set<Classroom> classrooms = new HashSet<>();
 
     public Room() {}
 
