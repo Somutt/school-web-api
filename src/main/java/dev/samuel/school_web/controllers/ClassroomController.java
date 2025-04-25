@@ -1,15 +1,13 @@
 package dev.samuel.school_web.controllers;
 
 import dev.samuel.school_web.controllers.dto.RegisterClassroomDTO;
+import dev.samuel.school_web.controllers.dto.ResponseClassroomDTO;
 import dev.samuel.school_web.controllers.utils.URIUtils;
 import dev.samuel.school_web.entities.Classroom;
 import dev.samuel.school_web.services.ClassroomService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -22,11 +20,21 @@ public class ClassroomController {
         this.service = service;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseClassroomDTO> show(@PathVariable String id) {
+        ResponseClassroomDTO responseClassroomDTO = service.findById(id);
+        if (responseClassroomDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(responseClassroomDTO);
+    }
+
     @PostMapping
-    public ResponseEntity<RegisterClassroomDTO> store(@RequestBody @Valid RegisterClassroomDTO registerClassroomDTO) {
+    public ResponseEntity<Void> store(@RequestBody @Valid RegisterClassroomDTO registerClassroomDTO) {
         Classroom classroom = service.save(registerClassroomDTO);
         URI uri = URIUtils.createHeaderLocation(classroom.getId());
 
-        return ResponseEntity.created(uri).body(registerClassroomDTO);
+        return ResponseEntity.created(uri).build();
     }
 }

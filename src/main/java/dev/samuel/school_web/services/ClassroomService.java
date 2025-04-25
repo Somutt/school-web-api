@@ -1,10 +1,14 @@
 package dev.samuel.school_web.services;
 
 import dev.samuel.school_web.controllers.dto.RegisterClassroomDTO;
+import dev.samuel.school_web.controllers.dto.ResponseClassroomDTO;
 import dev.samuel.school_web.entities.Classroom;
 import dev.samuel.school_web.repositories.ClassroomRepository;
 import dev.samuel.school_web.services.mappers.ClassroomMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ClassroomService {
@@ -16,9 +20,17 @@ public class ClassroomService {
         this.mapper = mapper;
     }
 
+    public ResponseClassroomDTO findById(String id) {
+        UUID classroomId = UUID.fromString(id);
+        Optional<Classroom> classroomOptional = repository.findById(classroomId);
+
+        return classroomOptional.map(mapper::toDTO).orElse(null);
+    }
+
     public Classroom save(RegisterClassroomDTO registerClassroomDTO) {
         Classroom classroom = mapper.toEntity(registerClassroomDTO);
+        classroom = repository.save(classroom);
 
-        return repository.save(classroom);
+        return classroom;
     }
 }
