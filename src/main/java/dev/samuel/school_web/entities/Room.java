@@ -14,7 +14,7 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(length = 30, nullable = false)
+    @Column(length = 30, nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
     private Integer capacity;

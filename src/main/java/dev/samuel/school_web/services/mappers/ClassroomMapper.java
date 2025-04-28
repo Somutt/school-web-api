@@ -34,6 +34,7 @@ public class ClassroomMapper {
         classroom.setCode(registerClassroomDTO.code());
         classroom.setProfessor(professorRepository.findById(registerClassroomDTO.professorId()).orElse(null));
         classroom.setRoom(roomRepository.findById(registerClassroomDTO.roomId()).orElse(null));
+
         return classroom;
     }
 
@@ -44,6 +45,7 @@ public class ClassroomMapper {
         String code = classroom.getCode();
         ProfessorDTO professorDTO = this.professorMapper.toDTO(classroom.getProfessor());
         RoomDTO roomDTO = this.roomMapper.toDTO(classroom.getRoom());
+
         return new ResponseClassroomDTO(code, professorDTO, roomDTO);
     }
 }

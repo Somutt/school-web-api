@@ -4,6 +4,7 @@ import dev.samuel.school_web.controllers.dto.RoomDTO;
 import dev.samuel.school_web.entities.Room;
 import dev.samuel.school_web.repositories.RoomRepository;
 import dev.samuel.school_web.services.mappers.RoomMapper;
+import dev.samuel.school_web.validators.RoomValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.UUID;
 @Service
 public class RoomService {
     private final RoomRepository repository;
+    private final RoomValidator validator;
     private final RoomMapper mapper;
 
-    public RoomService(RoomRepository repository, RoomMapper mapper) {
+    public RoomService(RoomRepository repository, RoomValidator validator, RoomMapper mapper) {
         this.repository = repository;
+        this.validator = validator;
         this.mapper = mapper;
     }
 
@@ -36,6 +39,7 @@ public class RoomService {
     public Room save(RoomDTO roomDTO) {
         Room room = mapper.toEntity(roomDTO);
 
+        validator.validate(room);
         return repository.save(room);
     }
 
@@ -54,6 +58,7 @@ public class RoomService {
         Room room = roomOptional.get();
         updateRoom(room, roomDTO);
 
+        validator.validate(room);
         return mapper.toDTO(repository.save(room));
     }
 
