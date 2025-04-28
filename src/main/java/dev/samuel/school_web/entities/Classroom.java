@@ -2,6 +2,7 @@ package dev.samuel.school_web.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ public class Classroom {
     private UUID id;
     @Column(length = 5, nullable = false, unique = true)
     private String code;
+    @Column(nullable = false)
+    private LocalDateTime schedule;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
@@ -60,6 +63,14 @@ public class Classroom {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public LocalDateTime getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(LocalDateTime schedule) {
+        this.schedule = schedule;
     }
 
     @Override

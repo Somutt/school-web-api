@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -48,10 +49,18 @@ public class ExceptionsHandler {
         return ErrorResponseDTO.methodNotSupported("HTTP Method not supported for this request");
     }
 
+    //Handles duplicates while registering entities that must be unique
     @ExceptionHandler(DuplicatedRegisterException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponseDTO handleDuplicatedRegisterException(DuplicatedRegisterException e) {
         return ErrorResponseDTO.conflict(e.getMessage());
+    }
+
+    //Handles bad formatted schedule while registering classrooms
+    @ExceptionHandler(DateTimeParseException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleDateTimeParseException(DateTimeParseException e) {
+        return ErrorResponseDTO.badRequest("Date format is invalid, please use dd/MM/yyyy HH:mm:ss format, example: 01/01/2027 22:50:00");
     }
 
     /*
@@ -61,5 +70,5 @@ public class ExceptionsHandler {
     public ErrorResponseDTO handleRuntimeException(RuntimeException e) {
         return ErrorResponseDTO.internalServerError("Unexpected error, send direct message or ticket");
     }
-     */
+    */
 }
