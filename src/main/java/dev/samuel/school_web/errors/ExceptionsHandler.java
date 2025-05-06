@@ -57,7 +57,7 @@ public class ExceptionsHandler {
         return ErrorResponseDTO.conflict(e.getMessage());
     }
 
-    //Handles bad formatted schedule while registering classrooms
+    //Handles bad formatted schedule while registering or updating classrooms
     @ExceptionHandler(DateTimeParseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleDateTimeParseException(DateTimeParseException e) {

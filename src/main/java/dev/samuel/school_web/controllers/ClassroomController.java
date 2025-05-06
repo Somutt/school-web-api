@@ -51,4 +51,15 @@ public class ClassroomController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseClassroomDTO> update(@PathVariable String id,
+                                                       @RequestBody @Valid RegisterClassroomDTO registerClassroomDTO) {
+        ResponseClassroomDTO responseClassroomDTO = service.update(id, registerClassroomDTO);
+        if (responseClassroomDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(responseClassroomDTO);
+    }
 }
