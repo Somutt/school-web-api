@@ -10,6 +10,6 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println("Hello World!");
+        System.out.println("Running in testing environment");
     }
 }

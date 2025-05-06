@@ -27,12 +27,6 @@ public class Student {
 
     public Student() {}
 
-    public Student(String name, String registry, String grade) {
-        this.name = name;
-        this.registry = registry;
-        this.grade = grade;
-    }
-
     public UUID getId() {
         return id;
     }

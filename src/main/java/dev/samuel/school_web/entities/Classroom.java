@@ -27,12 +27,6 @@ public class Classroom {
 
     public Classroom() {}
 
-    public Classroom(String code, Professor professor, Room room) {
-        this.code = code;
-        this.professor = professor;
-        this.room = room;
-    }
-
     public UUID getId() {
         return id;
     }

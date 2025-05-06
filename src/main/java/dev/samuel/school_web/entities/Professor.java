@@ -34,11 +34,6 @@ public class Professor {
 
     public Professor() {}
 
-    public Professor(String name, Integer age) {
-        this.name = name;
-        this.age = age;
-    }
-
     public UUID getId() {
         return id;
     }

@@ -29,11 +29,6 @@ public class Room {
 
     public Room() {}
 
-    public Room(String name, Integer capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
     public UUID getId() {
         return id;
     }

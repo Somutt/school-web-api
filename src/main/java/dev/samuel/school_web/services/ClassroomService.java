@@ -5,6 +5,7 @@ import dev.samuel.school_web.controllers.dto.ResponseClassroomDTO;
 import dev.samuel.school_web.entities.Classroom;
 import dev.samuel.school_web.repositories.ClassroomRepository;
 import dev.samuel.school_web.services.mappers.ClassroomMapper;
+import dev.samuel.school_web.validators.ClassroomValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,10 +14,12 @@ import java.util.UUID;
 @Service
 public class ClassroomService {
     private final ClassroomRepository repository;
+    private final ClassroomValidator validator;
     private final ClassroomMapper mapper;
 
-    public ClassroomService(ClassroomRepository repository, ClassroomMapper mapper) {
+    public ClassroomService(ClassroomRepository repository, ClassroomValidator validator ,ClassroomMapper mapper) {
         this.repository = repository;
+        this.validator = validator;
         this.mapper = mapper;
     }
 
@@ -29,8 +32,9 @@ public class ClassroomService {
 
     public Classroom save(RegisterClassroomDTO registerClassroomDTO) {
         Classroom classroom = mapper.toEntity(registerClassroomDTO);
-        classroom = repository.save(classroom);
 
+        validator.validate(classroom);
+        classroom = repository.save(classroom);
         return classroom;
     }
 }

@@ -1,6 +1,7 @@
 package dev.samuel.school_web.errors;
 
 import dev.samuel.school_web.errors.exceptions.DuplicatedRegisterException;
+import dev.samuel.school_web.errors.exceptions.UnavailableResourceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -61,6 +62,13 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleDateTimeParseException(DateTimeParseException e) {
         return ErrorResponseDTO.badRequest("Date format is invalid, please use dd/MM/yyyy HH:mm:ss format, example: 01/01/2027 22:50:00");
+    }
+
+    //Handles conflict of schedule for resource registration
+    @ExceptionHandler(UnavailableResourceException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponseDTO handleUnavailableResourceException(UnavailableResourceException e) {
+        return ErrorResponseDTO.conflict(e.getMessage());
     }
 
     /*
