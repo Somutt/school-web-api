@@ -23,7 +23,7 @@ public class ClassroomStudentService {
         this.studentRepository = studentRepository;
     }
 
-    public void save(String classroomId, String studentId) {
+    public void insert(String classroomId, String studentId) {
         UUID classroomUUID = UUID.fromString(classroomId);
         UUID studentUUID = UUID.fromString(studentId);
         Classroom classroom = classroomRepository.findById(classroomUUID).orElse(null);
@@ -36,4 +36,6 @@ public class ClassroomStudentService {
         ClassroomStudent classroomStudent = repository.save(new ClassroomStudent(classroom, student));
         classroom.getStudents().add(classroomStudent);
     }
+
+    public void delete(String classroomId, String studentId) {}
 }

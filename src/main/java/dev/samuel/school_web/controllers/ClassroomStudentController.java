@@ -14,8 +14,14 @@ public class ClassroomStudentController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Void> insert(@PathVariable String id, @RequestBody String studentId) {}
+    public ResponseEntity<Void> attach(@PathVariable String id, @RequestBody String studentId) {
+        service.insert(id, studentId);
+
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id, @RequestBody String studentId) {}
+    public ResponseEntity<Void> detach(@PathVariable String id, @RequestBody String studentId) {
+        return ResponseEntity.noContent().build();
+    }
 }
