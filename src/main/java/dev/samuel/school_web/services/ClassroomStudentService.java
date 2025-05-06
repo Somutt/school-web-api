@@ -1,0 +1,39 @@
+package dev.samuel.school_web.services;
+
+import dev.samuel.school_web.entities.Classroom;
+import dev.samuel.school_web.entities.ClassroomStudent;
+import dev.samuel.school_web.entities.Student;
+import dev.samuel.school_web.repositories.ClassroomRepository;
+import dev.samuel.school_web.repositories.ClassroomStudentRepository;
+import dev.samuel.school_web.repositories.StudentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+public class ClassroomStudentService {
+    private final ClassroomStudentRepository repository;
+    private final ClassroomRepository classroomRepository;
+    private final StudentRepository studentRepository;
+
+    public ClassroomStudentService(ClassroomStudentRepository repository, ClassroomRepository classroomRepository,
+                                   StudentRepository studentRepository) {
+        this.repository = repository;
+        this.classroomRepository = classroomRepository;
+        this.studentRepository = studentRepository;
+    }
+
+    public void save(String classroomId, String studentId) {
+        UUID classroomUUID = UUID.fromString(classroomId);
+        UUID studentUUID = UUID.fromString(studentId);
+        Classroom classroom = classroomRepository.findById(classroomUUID).orElse(null);
+        Student student = studentRepository.findById(studentUUID).orElse(null);
+
+        if (classroom == null || student == null) {
+            return;
+        }
+
+        ClassroomStudent classroomStudent = repository.save(new ClassroomStudent(classroom, student));
+        classroom.getStudents().add(classroomStudent);
+    }
+}

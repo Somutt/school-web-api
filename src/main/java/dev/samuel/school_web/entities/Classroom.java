@@ -3,7 +3,9 @@ package dev.samuel.school_web.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +26,9 @@ public class Classroom {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+
+    @OneToMany(mappedBy = "id.classroom")
+    private final Set<ClassroomStudent> students = new HashSet<>();
 
     public Classroom() {}
 
@@ -65,6 +70,10 @@ public class Classroom {
 
     public void setSchedule(LocalDateTime schedule) {
         this.schedule = schedule;
+    }
+
+    public Set<ClassroomStudent> getStudents() {
+        return students;
     }
 
     @Override

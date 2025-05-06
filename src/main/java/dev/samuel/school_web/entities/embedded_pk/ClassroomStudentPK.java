@@ -1,4 +1,4 @@
-package dev.samuel.school_web.entities.embeddedpk;
+package dev.samuel.school_web.entities.embedded_pk;
 
 import dev.samuel.school_web.entities.Classroom;
 import dev.samuel.school_web.entities.Student;

@@ -1,6 +1,6 @@
 package dev.samuel.school_web.entities;
 
-import dev.samuel.school_web.entities.embeddedpk.ClassroomStudentPK;
+import dev.samuel.school_web.entities.embedded_pk.ClassroomStudentPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
