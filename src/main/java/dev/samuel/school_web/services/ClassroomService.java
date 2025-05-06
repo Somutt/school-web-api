@@ -8,6 +8,7 @@ import dev.samuel.school_web.services.mappers.ClassroomMapper;
 import dev.samuel.school_web.validators.ClassroomValidator;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,12 @@ public class ClassroomService {
         this.mapper = mapper;
     }
 
+    public List<ResponseClassroomDTO> findAll() {
+        List<Classroom> classrooms = repository.findAll();
+
+        return classrooms.stream().map(mapper::toDTO).toList();
+    }
+
     public ResponseClassroomDTO findById(String id) {
         UUID classroomId = UUID.fromString(id);
         Optional<Classroom> classroomOptional = repository.findById(classroomId);
@@ -36,5 +43,10 @@ public class ClassroomService {
         validator.validate(classroom);
         classroom = repository.save(classroom);
         return classroom;
+    }
+
+    public void delete(String id) {
+        UUID classroomId = UUID.fromString(id);
+        repository.deleteById(classroomId);
     }
 }

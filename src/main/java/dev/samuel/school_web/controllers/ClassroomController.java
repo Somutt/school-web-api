@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/classrooms")
@@ -18,6 +19,13 @@ public class ClassroomController {
 
     public ClassroomController(ClassroomService service) {
         this.service = service;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResponseClassroomDTO>> index() {
+        List<ResponseClassroomDTO> classrooms = service.findAll();
+
+        return ResponseEntity.ok(classrooms);
     }
 
     @GetMapping("/{id}")
@@ -36,5 +44,11 @@ public class ClassroomController {
         URI uri = URIUtils.createHeaderLocation(classroom.getId());
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> destroy(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
