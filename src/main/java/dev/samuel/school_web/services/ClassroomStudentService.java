@@ -4,7 +4,6 @@ import dev.samuel.school_web.controllers.dto.ClassroomStudentDTO;
 import dev.samuel.school_web.entities.Classroom;
 import dev.samuel.school_web.entities.ClassroomStudent;
 import dev.samuel.school_web.entities.Student;
-import dev.samuel.school_web.entities.embedded_pk.ClassroomStudentPK;
 import dev.samuel.school_web.errors.exceptions.AttachResourceNotFoundException;
 import dev.samuel.school_web.repositories.ClassroomRepository;
 import dev.samuel.school_web.repositories.ClassroomStudentRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-//Insert validation for students registering duplication
 @Service
 public class ClassroomStudentService {
     private final ClassroomStudentRepository repository;

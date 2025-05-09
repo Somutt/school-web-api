@@ -80,18 +80,17 @@ public class ExceptionsHandler {
         return ErrorResponseDTO.notFound(e.getMessage());
     }
 
+    //Handle Database Constraints violations on REST operations
     @ExceptionHandler(JdbcSQLIntegrityConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleJdbcSQLIntegrityConstraintViolationException(JdbcSQLIntegrityConstraintViolationException e) {
         return ErrorResponseDTO.badRequest("Resource cannot be deleted because another depends on it");
     }
 
-    /*
     //Generic RuntimeException handler
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponseDTO handleRuntimeException(RuntimeException e) {
         return ErrorResponseDTO.internalServerError("Unexpected error, send direct message or ticket");
     }
-    */
 }
