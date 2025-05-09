@@ -19,6 +19,13 @@ public class ClassroomStudentPK {
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
+    public ClassroomStudentPK() {}
+
+    public ClassroomStudentPK(Classroom classroom, Student student) {
+        this.classroom = classroom;
+        this.student = student;
+    }
+
     public Student getStudent() {
         return student;
     }

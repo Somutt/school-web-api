@@ -24,7 +24,10 @@ public class ClassroomStudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> detach(@PathVariable String id, @RequestBody String studentId) {
+    public ResponseEntity<Void> detach(@PathVariable String id,
+                                       @RequestBody @Valid ClassroomStudentDTO classroomStudentDTO) {
+        service.delete(id, classroomStudentDTO);
+
         return ResponseEntity.noContent().build();
     }
 }
