@@ -4,7 +4,7 @@ import dev.samuel.school_web.controllers.dto.ClassroomStudentDTO;
 import dev.samuel.school_web.entities.Classroom;
 import dev.samuel.school_web.entities.ClassroomStudent;
 import dev.samuel.school_web.entities.Student;
-import dev.samuel.school_web.errors.exceptions.UnavailableResourceException;
+import dev.samuel.school_web.errors.exceptions.AttachResourceNotFoundException;
 import dev.samuel.school_web.repositories.ClassroomRepository;
 import dev.samuel.school_web.repositories.ClassroomStudentRepository;
 import dev.samuel.school_web.repositories.StudentRepository;
@@ -32,7 +32,7 @@ public class ClassroomStudentService {
         Student student = studentRepository.findById(studentUUID).orElse(null);
 
         if (classroom == null || student == null) {
-            throw new UnavailableResourceException("Designated classroom or student not found");
+            throw new AttachResourceNotFoundException("Designated classroom or student not found");
         }
 
         ClassroomStudent classroomStudent = repository.save(new ClassroomStudent(classroom, student));

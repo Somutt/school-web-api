@@ -1,5 +1,6 @@
 package dev.samuel.school_web.errors;
 
+import dev.samuel.school_web.errors.exceptions.AttachResourceNotFoundException;
 import dev.samuel.school_web.errors.exceptions.DuplicatedRegisterException;
 import dev.samuel.school_web.errors.exceptions.UnavailableResourceException;
 import org.springframework.http.HttpStatus;
@@ -69,6 +70,13 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponseDTO handleUnavailableResourceException(UnavailableResourceException e) {
         return ErrorResponseDTO.conflict(e.getMessage());
+    }
+
+    //Handles resource not found when attaching or detaching n:n tables
+    @ExceptionHandler(AttachResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDTO handleAttachResourceNotFoundException(AttachResourceNotFoundException e) {
+        return ErrorResponseDTO.notFound(e.getMessage());
     }
 
     /*
