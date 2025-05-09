@@ -1,6 +1,8 @@
 package dev.samuel.school_web.controllers;
 
+import dev.samuel.school_web.controllers.dto.ClassroomStudentDTO;
 import dev.samuel.school_web.services.ClassroomStudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,9 @@ public class ClassroomStudentController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Void> attach(@PathVariable String id, @RequestBody String studentId) {
-        service.insert(id, studentId);
+    public ResponseEntity<Void> attach(@PathVariable String id,
+                                       @RequestBody @Valid ClassroomStudentDTO classroomStudentDTO) {
+        service.insert(id, classroomStudentDTO);
 
         return ResponseEntity.ok().build();
     }
