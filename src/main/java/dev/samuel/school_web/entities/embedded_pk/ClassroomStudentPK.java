@@ -21,11 +21,6 @@ public class ClassroomStudentPK {
 
     public ClassroomStudentPK() {}
 
-    public ClassroomStudentPK(Classroom classroom, Student student) {
-        this.classroom = classroom;
-        this.student = student;
-    }
-
     public Student getStudent() {
         return student;
     }

@@ -21,20 +21,16 @@ public class ClassroomStudent {
         id.setStudent(student);
     }
 
+    public ClassroomStudentPK getId() {
+        return id;
+    }
+
     public Classroom getClassroom() {
         return id.getClassroom();
     }
 
-    public void setClassroom(Classroom classroom) {
-        id.setClassroom(classroom);
-    }
-
     public Student getStudent() {
         return id.getStudent();
-    }
-
-    public void setStudent(Student student) {
-        id.setStudent(student);
     }
 
     @Override

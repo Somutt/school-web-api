@@ -3,6 +3,7 @@ package dev.samuel.school_web.errors;
 import dev.samuel.school_web.errors.exceptions.AttachResourceNotFoundException;
 import dev.samuel.school_web.errors.exceptions.DuplicatedRegisterException;
 import dev.samuel.school_web.errors.exceptions.UnavailableResourceException;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -77,6 +78,12 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponseDTO handleAttachResourceNotFoundException(AttachResourceNotFoundException e) {
         return ErrorResponseDTO.notFound(e.getMessage());
+    }
+
+    @ExceptionHandler(JdbcSQLIntegrityConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleJdbcSQLIntegrityConstraintViolationException(JdbcSQLIntegrityConstraintViolationException e) {
+        return ErrorResponseDTO.badRequest("Resource cannot be deleted because another depends on it");
     }
 
     /*

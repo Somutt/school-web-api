@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
+//Insert validation for students registering duplication
 @Service
 public class ClassroomStudentService {
     private final ClassroomStudentRepository repository;
@@ -45,14 +46,14 @@ public class ClassroomStudentService {
             throw new AttachResourceNotFoundException("Designated classroom or student not found");
         }
 
-        ClassroomStudentPK classroomStudentPK = new ClassroomStudentPK(classroom, student);
-        Optional<ClassroomStudent> classroomStudent = repository.findById(classroomStudentPK);
+        ClassroomStudent aux = new ClassroomStudent(classroom, student);
+        Optional<ClassroomStudent> classroomStudent = repository.findById(aux.getId());
         if (classroomStudent.isEmpty()) {
             throw new AttachResourceNotFoundException("Student not registered in this classroom");
         }
 
         classroom.getStudents().remove(classroomStudent.get());
-        repository.deleteById(classroomStudentPK);
+        repository.deleteById(classroomStudent.get().getId());
     }
 
     private Classroom findClassroom(String classroomId) {
