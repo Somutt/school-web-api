@@ -1,16 +1,16 @@
 package dev.samuel.school_web.services.mappers;
 
-import dev.samuel.school_web.controllers.dto.ProfessorDTO;
-import dev.samuel.school_web.controllers.dto.RegisterClassroomDTO;
-import dev.samuel.school_web.controllers.dto.ResponseClassroomDTO;
-import dev.samuel.school_web.controllers.dto.RoomDTO;
+import dev.samuel.school_web.controllers.dto.*;
 import dev.samuel.school_web.entities.Classroom;
+import dev.samuel.school_web.entities.ClassroomStudent;
+import dev.samuel.school_web.entities.Student;
 import dev.samuel.school_web.repositories.ProfessorRepository;
 import dev.samuel.school_web.repositories.RoomRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Component
 public class ClassroomMapper {
@@ -18,15 +18,18 @@ public class ClassroomMapper {
     private final ProfessorRepository professorRepository;
     private final RoomRepository roomRepository;
     private final ProfessorMapper professorMapper;
+    private final StudentMapper studentMapper;
     private final RoomMapper roomMapper;
 
     public ClassroomMapper(ProfessorRepository professorRepository,
                            RoomRepository roomRepository,
                            ProfessorMapper professorMapper,
+                           StudentMapper studentMapper,
                            RoomMapper roomMapper) {
         this.professorRepository = professorRepository;
         this.roomRepository = roomRepository;
         this.professorMapper = professorMapper;
+        this.studentMapper = studentMapper;
         this.roomMapper = roomMapper;
     }
 
@@ -53,7 +56,9 @@ public class ClassroomMapper {
         String schedule = classroom.getSchedule().format(formatter);
         ProfessorDTO professorDTO = this.professorMapper.toDTO(classroom.getProfessor());
         RoomDTO roomDTO = this.roomMapper.toDTO(classroom.getRoom());
+        List<StudentDTO> students = classroom.getStudents().stream().map(
+                student -> this.studentMapper.toDTO(student.getStudent())).toList();
 
-        return new ResponseClassroomDTO(code,schedule ,professorDTO, roomDTO);
+        return new ResponseClassroomDTO(code, schedule, professorDTO, roomDTO, students);
     }
 }
