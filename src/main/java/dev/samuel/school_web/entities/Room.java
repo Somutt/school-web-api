@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
+@Table
+@EntityListeners(AuditingEntityListener.class)
 public class Room {
 
     @Id
@@ -51,6 +54,22 @@ public class Room {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public LocalDateTime getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return this.updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 
     @Override
