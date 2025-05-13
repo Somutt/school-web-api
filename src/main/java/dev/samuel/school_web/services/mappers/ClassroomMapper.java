@@ -2,8 +2,6 @@ package dev.samuel.school_web.services.mappers;
 
 import dev.samuel.school_web.controllers.dto.*;
 import dev.samuel.school_web.entities.Classroom;
-import dev.samuel.school_web.entities.ClassroomStudent;
-import dev.samuel.school_web.entities.Student;
 import dev.samuel.school_web.repositories.ProfessorRepository;
 import dev.samuel.school_web.repositories.RoomRepository;
 import org.springframework.stereotype.Component;

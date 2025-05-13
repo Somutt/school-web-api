@@ -3,12 +3,15 @@ package dev.samuel.school_web.entities;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table
+@EntityListeners(AuditingEntityListener.class)
 public class Student {
 
     @Id
@@ -60,7 +63,7 @@ public class Student {
     }
 
     public LocalDateTime getCreated() {
-        return created;
+        return this.created;
     }
 
     public void setCreated(LocalDateTime created) {
@@ -68,7 +71,7 @@ public class Student {
     }
 
     public LocalDateTime getUpdated() {
-        return updated;
+        return this.updated;
     }
 
     public void setUpdated(LocalDateTime updated) {
