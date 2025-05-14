@@ -3,16 +3,24 @@ package dev.samuel.school_web.entities;
 import dev.samuel.school_web.entities.embedded_pk.ClassroomStudentPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "classroom_student")
+@EntityListeners(AuditingEntityListener.class)
 public class ClassroomStudent {
 
     @EmbeddedId
     private final ClassroomStudentPK id = new ClassroomStudentPK();
+
+    @CreatedDate
+    private LocalDateTime created;
 
     public ClassroomStudent() {}
 
