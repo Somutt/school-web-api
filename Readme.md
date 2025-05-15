@@ -129,7 +129,7 @@ The Production build and deploy is being developed. This project is for study pu
 
 ## ⚙️ Testing
 
-[Postman — ](https://www.postman.com/) was used for manual testing of routes. Automated testing in development.
+[Postman](https://www.postman.com/) — was used for manual testing of routes. Automated testing in development.
 
 ---
 ⌨️ by [Samuel Moura Alves](https://github.com/Somutt)
