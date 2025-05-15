@@ -20,9 +20,9 @@ Each "students" route has a DTO that contains the following fields:
 ```
 For requests AND responses:
 {
-    "name": "student name", Must not be null, maximun size is 100
-    "registry": "NNNN00", Must not be null, follows "[A-Z][A-Z][A-Z][A-Z][0-9]+" regexp pattern
-    "grade": "N0", Must not be null, follows "\d[A-E]" regexp pattern
+    "name": "student name",
+    "registry": "NNNN00",
+    "grade": "N0",
 }
 ```
 
