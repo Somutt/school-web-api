@@ -6,7 +6,7 @@ Structured school REST API. Spring boot learning tool. Developer and Testing ver
 * [H2 database for testing environment](https://www.h2database.com/html/main.html) — H2 in-memory database.
 * [Postgres for development environment](https://www.postgresql.org/docs/) — Postgres SQL database
 * [Maven for dependency control](https://maven.apache.org/guides/index.html) — Maven
-* [MapStruct for quick mapping](https://mapstruct.org/documentation/reference-guide/)
+* [MapStruct for quick mapping](https://mapstruct.org/documentation/reference-guide/) — Automatic mapping for simple classes
 
 ### 📋 Supported routes and responses
 
