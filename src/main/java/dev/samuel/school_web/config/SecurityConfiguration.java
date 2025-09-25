@@ -16,8 +16,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+                .formLogin(configurer -> configurer.loginPage("/login").permitAll()) // enables login by form authorization
+                .httpBasic(Customizer.withDefaults()) // enables HTTP Basic authorization
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .build();
     }
