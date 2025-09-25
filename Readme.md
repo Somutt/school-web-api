@@ -1,6 +1,6 @@
 Structured school REST API. Spring boot learning tool. Developer and Testing version.
 
-## 🛠️ Build With
+## 🛠️ Built With
 
 * [Spring boot web](https://docs.spring.io/spring-boot/documentation.html) — Java Web framework.
 * [H2 database for testing environment](https://www.h2database.com/html/main.html) — H2 in-memory database.
